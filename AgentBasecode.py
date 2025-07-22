@@ -30,7 +30,14 @@ from langgraph.graph import StateGraph, END
 from langsmith import traceable
 import matplotlib.pyplot as plt
 import networkx as nx
+from IPython.display import Image, display
 
+def visualize_langgraph_mermaid():
+    try:
+        g = stock_graph.get_graph()
+        display(Image(g.draw_mermaid_png()))
+    except Exception as e:
+        print("Diagram rendering failed:", e)
 # Load environment variables
 load_dotenv()
 
@@ -439,9 +446,8 @@ print("-----------------------")
 ticker = input("Enter stock ticker (e.g. AAPL): ").strip()
 if ticker:
     run_stock_analysis(ticker)
-    visualize_graph()  # Show graph after run
+    visualize_langgraph_mermaid()
 else:
     print("No ticker provided. Running demo with AAPL...")
     run_stock_analysis("AAPL")
-    visualize_graph()
-
+    visualize_langgraph_mermaid()
